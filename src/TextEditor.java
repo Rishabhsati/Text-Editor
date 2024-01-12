@@ -1,8 +1,7 @@
-// import java.awt.MenuBar;
-
 import javax.swing.*;
-
-public class TextEditor {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+public class TextEditor implements ActionListener {
 
     // frame of the text editor
     JFrame frame;
@@ -38,6 +37,11 @@ public class TextEditor {
         file.add(openFile);
         file.add(saveFile);
 
+        // adding action event to the menu items
+        newFile.addActionListener(this);
+        openFile.addActionListener(this);
+        saveFile.addActionListener(this);
+
         // Initialize menu item of edit
         cut = new JMenuItem("Cut");
         copy = new JMenuItem("Copy");
@@ -51,6 +55,13 @@ public class TextEditor {
         edit.add(paste);
         edit.add(selectAll);
         edit.add(close);
+
+        // adding action event to the menu items
+        cut.addActionListener(this);
+        copy.addActionListener(this);
+        paste.addActionListener(this);
+        selectAll.addActionListener(this);
+        close.addActionListener(this);
 
         // adding file and edit in the menu bar
         menuBar.add(file);
@@ -75,5 +86,19 @@ public class TextEditor {
 
     public static void main(String[] args) {
         new TextEditor();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+//       perform action for cut
+        if(actionEvent.getSource()==cut) textArea.cut();
+//       perform action for copy
+        if(actionEvent.getSource()==copy) textArea.copy();
+//       perform action for paste
+        if(actionEvent.getSource()==paste) textArea.paste();
+//       perform action for selectAll
+        if(actionEvent.getSource()==selectAll) textArea.selectAll();
+//       perform action for close the window or file
+        if(actionEvent.getSource()==close) System.exit(0);
     }
 }
