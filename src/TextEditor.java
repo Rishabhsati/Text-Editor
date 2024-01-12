@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+
 public class TextEditor implements ActionListener {
 
     // frame of the text editor
@@ -70,7 +72,7 @@ public class TextEditor implements ActionListener {
         // Initialize text area
         textArea = new JTextArea();
         // set the layout bound of text area
-        textArea.setBounds(0, 0, 500, 500);
+        textArea.setBounds(0, 0, 400, 400);
 
         // adding menubar to the frame
         frame.add(menuBar);
@@ -100,5 +102,27 @@ public class TextEditor implements ActionListener {
         if(actionEvent.getSource()==selectAll) textArea.selectAll();
 //       perform action for close the window or file
         if(actionEvent.getSource()==close) System.exit(0);
+
+        if(actionEvent.getSource()==openFile){
+            JFileChooser fileChooser = new JFileChooser("C:");
+            int chooseOption = fileChooser.showOpenDialog(null);
+            if(chooseOption==JFileChooser.APPROVE_OPTION){
+                File file = fileChooser.getSelectedFile();
+                String filePath = file.getPath();
+                try{
+                    FileReader fileReader = new FileReader(filePath);
+                    BufferedReader bufferedReader = new BufferedReader(fileReader);
+                    String intermidiate = "",output = "";
+                    while((intermidiate = bufferedReader.readLine())!= null){
+                        output += intermidiate+"\n";
+                    }
+                    textArea.setText(output);
+                }
+                catch (IOException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
+            }
+        }
+
     }
 }
