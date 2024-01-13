@@ -5,8 +5,8 @@ Java Swing Text Editor is a lightweight text editor built using Java Swing, offe
 ## Features
 
 - **User-Friendly Interface:** Simple and intuitive design for seamless text editing.
-- **Text Operations:** Common operations such as cut, copy, paste, undo, and redo.
-- **File Management:** Open, save, and save-as functionalities to handle text files.
+- **Text Operations:** Common operations such as cut, copy, paste, select all and close.
+- **File Management:** Open and save functionalities to handle text files.
 - **Customizable Look and Feel:** Easily customizable UI with Java Swing.
 
 ## Getting Started
@@ -25,5 +25,4 @@ Java Swing Text Editor is a lightweight text editor built using Java Swing, offe
 ## Usage
 
 1. Open the text editor.
-2. Utilize the menu bar or keyboard shortcuts for text editing.
-3. Save your work through the "File" menu.
+2. Save your work through the "File" menu.
