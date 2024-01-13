@@ -80,12 +80,12 @@ public class TextEditor implements ActionListener {
         frame.add(menuBar);
 
         // adding text area to the frame
-//        frame.add(textArea);
         JPanel panel = new JPanel();
-        panel.setBorder(new EmptyBorder(5,5,5,5));
-        panel.setLayout(new BorderLayout(0,0));
+        panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        panel.setLayout(new BorderLayout(0, 0));
 
-        JScrollPane scrollPane = new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         panel.add(scrollPane);
         frame.add(panel);
         frame.setJMenuBar(menuBar);
@@ -101,57 +101,61 @@ public class TextEditor implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-//       perform action for cut
-        if(actionEvent.getSource()==cut) textArea.cut();
-//       perform action for copy
-        if(actionEvent.getSource()==copy) textArea.copy();
-//       perform action for paste
-        if(actionEvent.getSource()==paste) textArea.paste();
-//       perform action for selectAll
-        if(actionEvent.getSource()==selectAll) textArea.selectAll();
-//       perform action for close the window or file
-        if(actionEvent.getSource()==close) System.exit(0);
+        // perform action for cut
+        if (actionEvent.getSource() == cut)
+            textArea.cut();
+        // perform action for copy
+        if (actionEvent.getSource() == copy)
+            textArea.copy();
+        // perform action for paste
+        if (actionEvent.getSource() == paste)
+            textArea.paste();
+        // perform action for selectAll
+        if (actionEvent.getSource() == selectAll)
+            textArea.selectAll();
+        // perform action for close the window or file
+        if (actionEvent.getSource() == close)
+            System.exit(0);
 
-//        perform action for open file
-        if(actionEvent.getSource()==openFile){
-//            file choosing menu for slect the file and given the starting path is C: drive
+        // perform action for open file
+        if (actionEvent.getSource() == openFile) {
+            // file choosing menu for slect the file and given the starting path is C: drive
             JFileChooser fileChooser = new JFileChooser("C:");
             int chooseOption = fileChooser.showOpenDialog(null);
-//            perform action if we choose any file otherwise it is null
-            if(chooseOption==JFileChooser.APPROVE_OPTION){
-//                select the file
+            // perform action if we choose any file otherwise it is null
+            if (chooseOption == JFileChooser.APPROVE_OPTION) {
+                // select the file
                 File file = fileChooser.getSelectedFile();
-//                get the file path
+                // get the file path
                 String filePath = file.getPath();
-//                try and catch for exception handling
-                try{
-//                    added file reader to get the file data
+                // try and catch for exception handling
+                try {
+                    // added file reader to get the file data
                     FileReader fileReader = new FileReader(filePath);
-//                    added bufferreader to read the file
+                    // added bufferreader to read the file
                     BufferedReader bufferedReader = new BufferedReader(fileReader);
-                    String intermidiate = "",output = "";
-//                    here we are reading the file line by line
-                    while((intermidiate = bufferedReader.readLine())!= null){
-                        output += intermidiate+"\n";
+                    String intermidiate = "", output = "";
+                    // here we are reading the file line by line
+                    while ((intermidiate = bufferedReader.readLine()) != null) {
+                        output += intermidiate + "\n";
                     }
-//                    set the text in the text area
+                    // set the text in the text area
                     textArea.setText(output);
-                }
-                catch (IOException fileNotFoundException) {
+                } catch (IOException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }
             }
         }
 
-//        perform action for save file
-        if(actionEvent.getSource()==saveFile){
-//            file choosing menu for slect the file and given the starting path is C: drive
+        // perform action for save file
+        if (actionEvent.getSource() == saveFile) {
+            // file choosing menu for slect the file and given the starting path is C: drive
             JFileChooser fileChooser = new JFileChooser(":C");
             int chooseOption = fileChooser.showSaveDialog(null);
-//            perform action if we choose any file otherwise it is null
-            if(chooseOption==JFileChooser.APPROVE_OPTION){
-//                adding the file path and name with extension .txt
-                File file = new File(fileChooser.getSelectedFile().getAbsolutePath()+".txt");
+            // perform action if we choose any file otherwise it is null
+            if (chooseOption == JFileChooser.APPROVE_OPTION) {
+                // adding the file path and name with extension .txt
+                File file = new File(fileChooser.getSelectedFile().getAbsolutePath() + ".txt");
                 try {
                     FileWriter fileWriter = new FileWriter(file);
                     BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -162,8 +166,8 @@ public class TextEditor implements ActionListener {
                 }
             }
         }
-//        perform action for new window
-        if(actionEvent.getSource()==newWindow){
+        // perform action for new window
+        if (actionEvent.getSource() == newWindow) {
             TextEditor textEditor = new TextEditor();
         }
     }
