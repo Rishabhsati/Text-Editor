@@ -124,5 +124,20 @@ public class TextEditor implements ActionListener {
             }
         }
 
+        if(actionEvent.getSource()==saveFile){
+            JFileChooser fileChooser = new JFileChooser(":C");
+            int chooseOption = fileChooser.showSaveDialog(null);
+            if(chooseOption==JFileChooser.APPROVE_OPTION){
+                File file = new File(fileChooser.getSelectedFile().getAbsolutePath()+".txt");
+                try {
+                    FileWriter fileWriter = new FileWriter(file);
+                    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                    textArea.write(bufferedWriter);
+                    bufferedWriter.close();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        }
     }
 }
