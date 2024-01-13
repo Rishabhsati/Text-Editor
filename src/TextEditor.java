@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -12,7 +14,7 @@ public class TextEditor implements ActionListener {
     // menu item file
     JMenu file;
     // menu items of file
-    JMenuItem newFile, openFile, saveFile;
+    JMenuItem newWindow, openFile, saveFile;
     // menu item edit
     JMenu edit;
     // menu item of edit
@@ -30,17 +32,17 @@ public class TextEditor implements ActionListener {
         edit = new JMenu("Edit");
 
         // Initialize menu item of file
-        newFile = new JMenuItem("New File");
+        newWindow = new JMenuItem("New Window");
         openFile = new JMenuItem("Open File");
         saveFile = new JMenuItem("Save File");
 
         // adding file items in the file
-        file.add(newFile);
+        file.add(newWindow);
         file.add(openFile);
         file.add(saveFile);
 
         // adding action event to the menu items
-        newFile.addActionListener(this);
+        newWindow.addActionListener(this);
         openFile.addActionListener(this);
         saveFile.addActionListener(this);
 
@@ -76,9 +78,16 @@ public class TextEditor implements ActionListener {
 
         // adding menubar to the frame
         frame.add(menuBar);
-        // adding text area to the frame
-        frame.add(textArea);
 
+        // adding text area to the frame
+//        frame.add(textArea);
+        JPanel panel = new JPanel();
+        panel.setBorder(new EmptyBorder(5,5,5,5));
+        panel.setLayout(new BorderLayout(0,0));
+
+        JScrollPane scrollPane = new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        panel.add(scrollPane);
+        frame.add(panel);
         frame.setJMenuBar(menuBar);
         frame.setBounds(100, 100, 400, 400);
 
@@ -103,19 +112,29 @@ public class TextEditor implements ActionListener {
 //       perform action for close the window or file
         if(actionEvent.getSource()==close) System.exit(0);
 
+//        perform action for open file
         if(actionEvent.getSource()==openFile){
+//            file choosing menu for slect the file and given the starting path is C: drive
             JFileChooser fileChooser = new JFileChooser("C:");
             int chooseOption = fileChooser.showOpenDialog(null);
+//            perform action if we choose any file otherwise it is null
             if(chooseOption==JFileChooser.APPROVE_OPTION){
+//                select the file
                 File file = fileChooser.getSelectedFile();
+//                get the file path
                 String filePath = file.getPath();
+//                try and catch for exception handling
                 try{
+//                    added file reader to get the file data
                     FileReader fileReader = new FileReader(filePath);
+//                    added bufferreader to read the file
                     BufferedReader bufferedReader = new BufferedReader(fileReader);
                     String intermidiate = "",output = "";
+//                    here we are reading the file line by line
                     while((intermidiate = bufferedReader.readLine())!= null){
                         output += intermidiate+"\n";
                     }
+//                    set the text in the text area
                     textArea.setText(output);
                 }
                 catch (IOException fileNotFoundException) {
@@ -124,10 +143,14 @@ public class TextEditor implements ActionListener {
             }
         }
 
+//        perform action for save file
         if(actionEvent.getSource()==saveFile){
+//            file choosing menu for slect the file and given the starting path is C: drive
             JFileChooser fileChooser = new JFileChooser(":C");
             int chooseOption = fileChooser.showSaveDialog(null);
+//            perform action if we choose any file otherwise it is null
             if(chooseOption==JFileChooser.APPROVE_OPTION){
+//                adding the file path and name with extension .txt
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath()+".txt");
                 try {
                     FileWriter fileWriter = new FileWriter(file);
@@ -138,6 +161,10 @@ public class TextEditor implements ActionListener {
                     ioException.printStackTrace();
                 }
             }
+        }
+//        perform action for new window
+        if(actionEvent.getSource()==newWindow){
+            TextEditor textEditor = new TextEditor();
         }
     }
 }
